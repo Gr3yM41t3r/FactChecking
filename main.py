@@ -22,8 +22,9 @@ with open("claimskg_result.csv") as f:
         print(intersection_as_list)
 ##'''
 list1 = ["amie", "amine", "ami"]
-list2 = ["aemine", "amine", "amieee"]
-
+list2 = ["aemine", "amine", "a
+ddmieee"]
+s
 list_as_lis1 = set(list1)
 intersection = list_as_lis1.intersection(list2)
 intersection_as_list = list(intersection)
