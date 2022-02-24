@@ -11,20 +11,21 @@ true = 0
 mixture = 0
 with open("claimskg_result.csv") as f:
     reader = csv.reader(f)
-    for row in reader:
-        list1 = row[9].split()
-        # print(list1)
-        list2 = row[9].split()
-        # print(list2)
-        list_as_lis1 = set(list1)
-        intersection = list_as_lis1.intersection(list2)
-        intersection_as_list = list(intersection)
-        print(intersection_as_list)
+    for row in range(number_of_claims):
+        for row2 in reader:
+            list1 = row[9].split()
+            print(list1)
+            # print(list1)
+            list2 = row2[9].split()
+            # print(list2)
+            list_as_lis1 = set(list1)
+            intersection = list_as_lis1.intersection(list2)
+            intersection_as_list = list(intersection)
+            print(intersection_as_list)
 ##'''
 list1 = ["amie", "amine", "ami"]
-list2 = ["aemine", "amine", "a
-ddmieee"]
-s
+list2 = ["aemine", "amine", "a"]
+
 list_as_lis1 = set(list1)
 intersection = list_as_lis1.intersection(list2)
 intersection_as_list = list(intersection)
