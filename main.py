@@ -1,9 +1,6 @@
 import csv
 
-file = open('claimskg_result.csv')
-csvreader = csv.reader(file)
-
-number_of_claims = sum(1 for row in csvreader)
+#number_of_claims = sum(1 for row in csvreader)
 
 false = 0
 other = 0
@@ -11,20 +8,20 @@ true = 0
 mixture = 0
 with open("claimskg_result.csv") as f:
     reader = csv.reader(f)
-    for row in reader:
+    myData = list(reader)
+    for row in myData:
         list1 = row[9].split()
         # print(list1)
-        list2 = row[9].split()
-        # print(list2)
-        list_as_lis1 = set(list1)
-        intersection = list_as_lis1.intersection(list2)
-        intersection_as_list = list(intersection)
-        print(intersection_as_list)
+        for row2 in myData:
+            list2 = row2[9].split()
+            # print(list2)
+            list_as_list1 = set(list1)
+            intersection = list_as_list1.intersection(list2)
+            intersection_as_list = list(intersection)
+            print(intersection_as_list)
 ##'''
 list1 = ["amie", "amine", "ami"]
-list2 = ["aemine", "amine", "a
-ddmieee"]
-s
+list2 = ["aemine", "amine", "addmieee"]
 list_as_lis1 = set(list1)
 intersection = list_as_lis1.intersection(list2)
 intersection_as_list = list(intersection)
