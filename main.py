@@ -1,17 +1,9 @@
-import csv
+from sklearn import *
+from sklearn.metrics.pairwise import cosine_similarity
+import spacy
+from similarityDetector import *
 
-#number_of_claims = sum(1 for row in csvreader)
+sameLignComparaison("claims_prof.csv", "similarity.csv")
 
-with open("claimskg_result.csv") as f:
-    reader = csv.reader(f)
-    myData = list(reader)
-    for row in myData:
-        list1 = row[9].split()
-        for row2 in myData:
-            list2 = row2[9].split()
-            print(row)
-            list_as_list1 = set(list1)
-            intersection = list_as_list1.intersection(list2)
-            intersection_as_list = list(intersection)
-            print(intersection_as_list)
+
 
