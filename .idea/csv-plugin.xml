@@ -3,13 +3,6 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="/claims_prof.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="/claimskg_result.csv">
           <value>
             <Attribute>
@@ -17,14 +10,21 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/similarity.csv">
+        <entry key="/inputCSV/claims_prof.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/small_claimskg_result.csv">
+        <entry key="/inputCSV/small_claimskg_result.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/similarity.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

@@ -1,4 +1,6 @@
 import csv
+import math
+from collections import Counter
 
 from Levenshtein import distance
 from sentence_transformers import SentenceTransformer
@@ -90,5 +92,25 @@ def Jaccard_Similarity(text1, text2):
     if len(union) == 0:
         return 0
     return float(len(intersection)) / len(union)
+
+def Jaccard_distance(text1, text2):
+    a = set(text1)
+    b = set(text2)
+    return 1.0 * len(a&b)/len(a|b)
+
+def cosine_similarity_ngrams(a, b):
+    vec1 = Counter(a)
+    vec2 = Counter(b)
+
+    intersection = set(vec1.keys()) & set(vec2.keys())
+    numerator = sum([vec1[x] * vec2[x] for x in intersection])
+
+    sum1 = sum([vec1[x] ** 2 for x in vec1.keys()])
+    sum2 = sum([vec2[x] ** 2 for x in vec2.keys()])
+    denominator = math.sqrt(sum1) * math.sqrt(sum2)
+
+    if not denominator:
+        return 0.0
+    return float(numerator) / denominator
 
 ##sameLignComparaison("claims_prof.csv", "similarity.csv")
