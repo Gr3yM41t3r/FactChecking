@@ -5,6 +5,8 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.util import ngrams
+from sklearn.metrics.pairwise import  cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 ##nltk.download('wordnet')
 ##nltk.download('stopwords')
@@ -12,6 +14,10 @@ header = ['IdA', 'TextBefore', 'TextAfter']
 data = []
 # lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words('english'))
+tfidf_vectorizer = TfidfVectorizer()
+
+# Generate the tf-idf vectors for the corpus
+tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
 
 
 ##----------------- stop words------------------------------
@@ -37,7 +43,6 @@ def removeStopWordsCSV(inputFile, outputFile):
                 data.append(textAfter)
                 writer.writerow(data)
 
-
 def removeStopWords(text):
     words = text.split()
     pretrained_Text = ""
@@ -45,6 +50,30 @@ def removeStopWords(text):
         if not r in stop_words:
             pretrained_Text += r + " "
     return pretrained_Text
+
+
+def removeStopWordsProfCsv():
+    header2 = ['TexteA', 'TextB', 'TextAPT', 'TextBPT']
+    with open('inputCSV/claims_prof.csv') as inputData:
+        reader = csv.reader(inputData)
+        claims = list(reader)
+        with open("outputCSV/pretraiteCSV.csv", "w") as outputData:
+            writer = csv.writer(outputData)
+            writer.writerow(header2)
+            counter = 0
+            for claim in claims:
+                print(counter)
+                counter += 1
+                data.clear()
+                data.append(claim[6])
+                data.append(claim[7])
+                data.append(removeStopWords(claim[6]))
+                data.append(removeStopWords(claim[7]))
+                writer.writerow(data)
+
+removeStopWordsProfCsv()
+
+
 
 
 ##------------------lemmatisation----------------------
