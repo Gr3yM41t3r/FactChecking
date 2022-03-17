@@ -17,7 +17,7 @@ stop_words = set(stopwords.words('english'))
 tfidf_vectorizer = TfidfVectorizer()
 
 # Generate the tf-idf vectors for the corpus
-tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
+
 
 
 ##----------------- stop words------------------------------
@@ -53,7 +53,8 @@ def removeStopWords(text):
 
 
 def removeStopWordsProfCsv():
-    header2 = ['TexteA', 'TextB', 'TextAPT', 'TextBPT']
+    header2 = ['TexteA', 'TextB', 'TextAPT', 'TextBPT','TFIDF','EXPECTED']
+    corpus = []
     with open('inputCSV/claims_prof.csv') as inputData:
         reader = csv.reader(inputData)
         claims = list(reader)
@@ -67,8 +68,15 @@ def removeStopWordsProfCsv():
                 data.clear()
                 data.append(claim[6])
                 data.append(claim[7])
-                data.append(removeStopWords(claim[6]))
-                data.append(removeStopWords(claim[7]))
+                removedStopWords1=removeStopWords(claim[6])
+                removedStopWords2=removeStopWords(claim[7])
+                data.append(removedStopWords1)
+                data.append(removedStopWords2)
+                corpus.append(removedStopWords1)
+                corpus.append(removedStopWords2)
+                tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
+                data.append(cosine_similarity(tfidf_matrix, tfidf_matrix))
+                data.append(cosine_similarity(tfidf_matrix, tfidf_matrix))
                 writer.writerow(data)
 
 removeStopWordsProfCsv()
