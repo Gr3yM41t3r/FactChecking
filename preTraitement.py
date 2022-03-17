@@ -66,6 +66,7 @@ def removeStopWordsProfCsv():
                 print(counter)
                 counter += 1
                 data.clear()
+                corpus.clear()
                 data.append(claim[6])
                 data.append(claim[7])
                 removedStopWords1=removeStopWords(claim[6])
@@ -75,8 +76,10 @@ def removeStopWordsProfCsv():
                 corpus.append(removedStopWords1)
                 corpus.append(removedStopWords2)
                 tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
-                data.append(cosine_similarity(tfidf_matrix, tfidf_matrix))
-                data.append(cosine_similarity(tfidf_matrix, tfidf_matrix))
+                cosine =cosine_similarity(tfidf_matrix, tfidf_matrix)
+                print(cosine)
+                data.append(cosine[0][1])
+                data.append(claim[0])
                 writer.writerow(data)
 
 removeStopWordsProfCsv()

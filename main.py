@@ -1,5 +1,4 @@
-from preTraitement import removeStopWordsCSV, removeStopWords
-from similarityDetector import *
+
 
 from sklearn.metrics.pairwise import  cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -29,7 +28,7 @@ tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
 
 # compute and print the cosine similarity matrix
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
-print(cosine_sim)
+print(cosine_sim[1][0])
 
 #print("jaccard:{} Cosine {}".format(Jaccard_distance(pretrr1, pretrr2), cosine_similarity_ngrams(pretrr1, pretrr2)))
 
