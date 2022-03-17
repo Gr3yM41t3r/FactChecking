@@ -1,10 +1,12 @@
 import csv
 import nltk
+
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 header = ['IdA', 'TextBefore', 'TextAfter']
 data = []
+
 
 def removeStopWords():
     stop_words = set(stopwords.words('english'))
@@ -14,7 +16,7 @@ def removeStopWords():
         with open("outputCSV/pretraiteCSV.csv", "w") as outputData:
             writer = csv.writer(outputData)
             writer.writerow(header)
-            counter =0
+            counter = 0
             for claim in claims:
                 print(counter)
                 counter = counter + 1
@@ -25,8 +27,9 @@ def removeStopWords():
                 textAfter = ""
                 for r in words:
                     if not r in stop_words:
-                        textAfter =textAfter +r+" "
+                        textAfter = textAfter + r + " "
                 data.append(textAfter)
                 writer.writerow(data)
+
 
 removeStopWords()
