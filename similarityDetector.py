@@ -93,10 +93,12 @@ def Jaccard_Similarity(text1, text2):
         return 0
     return float(len(intersection)) / len(union)
 
+
 def Jaccard_distance(text1, text2):
     a = set(text1)
     b = set(text2)
-    return 1.0 * len(a&b)/len(a|b)
+    return 1.0 * len(a & b) / len(a | b)
+
 
 def cosine_similarity_ngrams(a, b):
     vec1 = Counter(a)
