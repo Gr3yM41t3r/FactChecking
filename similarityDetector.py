@@ -100,6 +100,10 @@ def Jaccard_distance(text1, text2):
     return 1.0 * len(a & b) / len(a | b)
 
 
+def Levenshtein_Distance(text1, text2):
+    return distance(text1, text2)
+
+
 def cosine_similarity_ngrams(a, b):
     vec1 = Counter(a)
     vec2 = Counter(b)
