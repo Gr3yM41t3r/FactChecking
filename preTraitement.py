@@ -1,9 +1,10 @@
-import csv
+import re
 
 from nltk.corpus import stopwords
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from nltk.tokenize import RegexpTokenizer
+from nltk.util import ngrams  # This is the ngram magic
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 from similarityDetector import *
 
 ##nltk.download('wordnet')
@@ -13,34 +14,13 @@ from similarityDetector import *
 stop_words = set(stopwords.words('english'))
 tfidf_vectorizer = TfidfVectorizer()
 tokenizer = RegexpTokenizer(r'\w+')
+re_stripper_alpha = re.compile('[^a-zA-Z]+')
 
 header = ['IdA', 'TextBefore', 'TextAfter']
 data = []
 
 
 ##----------------- stop words------------------------------
-def removeStopWordsCSV(inputFile, outputFile):
-    with open("inputCSV/small_claimskg_result.csv") as inputData:
-        reader = csv.reader(inputData)
-        claims = list(reader)
-        with open("outputCSV/pretraiteCSV.csv", "w") as outputData:
-            writer = csv.writer(outputData)
-            writer.writerow(header)
-            counter = 0
-            for claim in claims:
-                print(counter)
-                counter = counter + 1
-                data.clear()
-                data.append(claim[0])
-                data.append(claim[1])
-                words = claim[1].split()
-                textAfter = ""
-                for r in words:
-                    if not r in stop_words:
-                        textAfter = textAfter + r + " "
-                data.append(textAfter)
-                writer.writerow(data)
-
 
 def removeStopWords(text):
     words = text.split()
@@ -49,6 +29,23 @@ def removeStopWords(text):
         if not r in stop_words:
             pretrained_Text += r + " "
     return pretrained_Text
+
+
+##-------------------------------NGram  tools--------------
+
+
+
+def nGRAM(txt, NGRAM):
+    """Get tuples that ignores all punctuation (including sentences)."""
+    if not txt : return None
+    ng = ngrams(re_stripper_alpha.sub(' ', txt).split(), NGRAM)
+    return list(ng)
+
+def intersection(lst1, lst2):
+    return list(set(lst1) & set(lst2))
+
+def nGram_similarity(s1, s2, n):
+    return len(intersection(nGRAM(s1, n), nGRAM(s2, n))) / (min(len(s1.split()), len(s2.split())) - n + 1)
 
 
 def getResult(TFIDF, Jac):
@@ -72,13 +69,14 @@ def countRightAnswers():
         results = list(reader)
         right_answers = 0
         for result in results:
-            if result[7] == result[8]:
+            if result[8] == result[9]:
                 right_answers += 1
-        print((right_answers /len(results))*100 )
+        print((right_answers / len(results)) * 100)
 
 
 def removeStopWordsProfCsv():
-    header2 = ['TexteA', 'TextB', 'TextAPT', 'TextBPT', 'TFIDF', 'Jaccard_Distance', 'Levenshtein_Distance', 'EXPECTED',
+    header2 = ['TexteA', 'TextB', 'TextAPT', 'TextBPT', 'TFIDF', 'Jaccard_Distance', 'Levenshtein_Distance',
+               'NGram-Similarity', 'EXPECTED',
                'RESULT']
     corpus = []
     with open('inputCSV/claims_prof.csv') as inputData:
@@ -105,18 +103,18 @@ def removeStopWordsProfCsv():
                 corpus.append(textB_After)
                 tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
                 cosine = cosine_similarity(tfidf_matrix, tfidf_matrix)
-                print(tfidf_matrix)
-                print(textB*5)
                 tfidf_value = cosine[0][1]
                 # calculation Jaccard_Distance
                 jaccard_distance = Jaccard_distance(textA_After, textB_After)
                 # calculation Levenshtein_Distance
                 lev_distance = Levenshtein_Distance(textA_After, textB_After)
-                #Expected Result for similarity
+                # calculation Ngram_similarity
+                ngram_similarity = nGram_similarity(textA, textB, 3)
+                # Expected Result for similarity
                 expected_Similarity = claim[0]
                 # Actual  model similarity
                 actual_result = getResult(tfidf_value, jaccard_distance)
-                #adding data
+                # adding data
                 data.append(textA)
                 data.append(textB)
                 data.append(textA_After)
@@ -125,6 +123,7 @@ def removeStopWordsProfCsv():
                 data.append(tfidf_value)
                 data.append(jaccard_distance)
                 data.append(lev_distance)
+                data.append(ngram_similarity)
 
                 data.append(expected_Similarity)
                 data.append(actual_result)
@@ -133,16 +132,6 @@ def removeStopWordsProfCsv():
 
 
 removeStopWordsProfCsv()
-removeStopWordsProfCsv()
-
-removeStopWordsProfCsv()
-
-removeStopWordsProfCsv()
-removeStopWordsProfCsv()
-removeStopWordsProfCsv()
-removeStopWordsProfCsv()
-removeStopWordsProfCsv()
-
 countRightAnswers()
 
 
@@ -151,5 +140,3 @@ countRightAnswers()
 def lemmatizer():
     print("rocks :", lemmatizer.lemmatize("rocks"))
     print("corpora :", lemmatizer.lemmatize("corpora"))
-
-##-------------------------------NGram  tools--------------

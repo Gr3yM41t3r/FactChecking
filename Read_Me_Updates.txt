@@ -24,5 +24,15 @@ le score jac certe diminue mais pas assez pour justifier la difference
  si on a deux phrase qui partagent 99% mots (jac>90% et TFIDF >90%), comment on fait pour les comparer
         Exemple
             le grand pere de mathieu a dit "j'aime beaucoup les films americain"
-            le grand pere de mathieu a dit "je deteste beaucoup les films americain"
+            le grand pere de mathieu a dit "je deteste beaucoup les musiques americain"
+
+
  question pour les n gramme : le cas ou la phrase sont differente alors qu'ils ont le meme sens
+
+ claims1 = U.S. Senate candidate Barry Hinckley says 80 percent Egyptians oppose receiving foreign aid United States
+claims2 = U.S. Senate candidate Barry Hinckley says nation's tax code 80,000 pages
+
+
+25/03/22
+à faire
+traitement apres ex Obama says :"......."
