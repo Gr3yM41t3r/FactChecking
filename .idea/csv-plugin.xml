@@ -3,6 +3,20 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="/inputCSV/allClaims.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/inputCSV/claims_benc.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/inputCSV/claims_prof.csv">
           <value>
             <Attribute>
@@ -10,14 +24,35 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/inputCSV/claimskg_result (2).csv">
+        <entry key="/inputCSV/false.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/inputCSV/small_claimskg_result.csv">
+        <entry key="/inputCSV/mixture.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/inputCSV/other.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/inputCSV/true.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/outputCSV/claims_benc.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

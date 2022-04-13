@@ -1,44 +1,80 @@
 import csv
 
-from nltk.tokenize import RegexpTokenizer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-from nltk.util import ngrams # This is the ngram magic.
-import re
 
+header =['Annotations','Score','CR Author A','CR Author B','Review URL A','Review URL B','Text Fragments A','Text Fragments B','Entities A','Entities B','Keywords A','Keywords B','Citations A','Citations B','URI A','URI B']
+data =[]
+def final_cleaning1():
 
-
-tokenizer = RegexpTokenizer(r'\w+')
-abc = ' '.join(tokenizer.tokenize('Eighty-seven miles to go, yet.  Onward!'.lower()))
-print(abc)
-
-re_stripper_alpha = re.compile('[^a-zA-Z]+')
-
-
-
-phrase1 = "Newt Gingrich says Freddie Mac, electric co-ops and credit unions are similar organizations"
-phrase2 = "Gingrich repeats claim that Freddie Mac, credit unions are ‘government-sponsored enterprises’"
-
-
-def ngrams(sentence, n):
-  return zip(*[sentence.split()[i:] for i in range(n)])
-
-print(set(ngrams(phrase2,3)))
-
-
-def return_avg_value():
-    with open("outputCSV/pretraiteCSV.csv") as inputData:
+    with open('inputCSV/allClaims.csv') as inputData:
+        counter = 0
         reader = csv.reader(inputData)
         claims = list(reader)
-        sum_of_value_jav = 0
-        sum_of_value_tfidf = 0
-        count = 0
-        for claim in claims:
-            if claim[7] == "N":
-                sum_of_value_jav += float(claim[5])
-                sum_of_value_tfidf += float(claim[4])
-                count += 1
-        print("TFIDF : " , (sum_of_value_tfidf/count)*100)
-        print("jac : " , (sum_of_value_jav/count)*100)
+        with open('inputCSV/claims_prof.csv') as inputData2:
+            reader2 = csv.reader(inputData2)
+            calimsprof = list(reader2)
+            with open("outputCSV/claims_benc.csv", "w") as outputData:
+                writer = csv.writer(outputData)
+                writer.writerow(header)
+                for prof in calimsprof:
+                    for row2 in claims:
+                        if prof[5] == row2[12]:
+                            counter += 1
+                            data.clear()
+                            data.append(prof[0])
+                            data.append(prof[1])
+                            data.append(prof[2])
+                            data.append(prof[3])
+                            data.append(prof[4])
+                            data.append(prof[5])
+                            data.append(prof[6])
+                            data.append(prof[7])
+                            data.append(prof[8])
+                            data.append(row2[7])
+                            data.append(prof[10])
+                            data.append(row2[9])
+                            data.append(prof[12])
+                            data.append(prof[13])
+                            data.append(prof[14])
+                            data.append(prof[15])
+                            writer.writerow(data)
 
-#return_avg_value()
+
+def final_cleaning():
+    with open('inputCSV/allClaims.csv') as inputData:
+        counter = 0
+        reader = csv.reader(inputData)
+        claims = list(reader)
+        print(len(claims))
+        with open('inputCSV/claims_benc.csv') as inputData2:
+            reader2 = csv.reader(inputData2)
+            calimsprof = list(reader2)
+            print(len(calimsprof))
+            with open("outputCSV/claims_benc.csv", "w") as outputData:
+                writer = csv.writer(outputData)
+                writer.writerow(header)
+                for prof in calimsprof:
+                    print(counter)
+                    for row2 in claims:
+                        if prof[4] == row2[12]:
+                            counter += 1
+                            data.clear()
+                            data.append(prof[0])
+                            data.append(prof[1])
+                            data.append(prof[2])
+                            data.append(prof[3])
+                            data.append(prof[4])
+                            data.append(prof[5])
+                            data.append(prof[6])
+                            data.append(prof[7])
+                            data.append(row2[7])
+                            data.append(prof[9])
+                            data.append(row2[9])
+                            data.append(prof[11])
+                            data.append(prof[12])
+                            data.append(prof[13])
+                            data.append(prof[14])
+                            data.append(prof[15])
+                            writer.writerow(data)
+
+
+final_cleaning()
