@@ -76,5 +76,24 @@ def final_cleaning():
                             data.append(prof[15])
                             writer.writerow(data)
 
-
-final_cleaning()
+def wa3():
+    header2 =['text','keywords']
+    data =[]
+    with open('inputCSV/mixture.csv') as inputData:
+        counter = 0
+        reader = csv.reader(inputData)
+        claims = list(reader)
+        with open("outputCSV/mixture.csv", "w") as outputData:
+                writer = csv.writer(outputData)
+                writer.writerow(header2)
+                for prof in claims:
+                    if prof[9] :
+                        data.clear()
+                        print(counter)
+                        data.append(prof[1])
+                        data.append(prof[9])
+                        counter += 1
+                        writer.writerow(data)
+                       
+            
+wa3()
