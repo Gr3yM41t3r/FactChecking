@@ -1,4 +1,5 @@
 import re
+
 import nltk as nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
@@ -34,35 +35,34 @@ def removeStopWords(text):
 ##-------------------------------NGram  tools--------------
 
 
-
 def nGRAM(txt, NGRAM):
     """Get tuples that ignores all punctuation (including sentences)."""
-    if not txt : return None
+    if not txt: return None
     ng = ngrams(re_stripper_alpha.sub(' ', txt).split(), NGRAM)
     return list(ng)
 
+
 def intersection(lst1, lst2):
     return list(set(lst1) & set(lst2))
+
 
 def nGram_similarity(s1, s2, n):
     return len(intersection(nGRAM(s1, n), nGRAM(s2, n))) / (min(len(s1.split()), len(s2.split())) - n + 1)
 
 
 def getResult(textScore, KeywordsScore):
-    if textScore > 0.8 :
-        if KeywordsScore >0.8:
-          return "E"
-    elif 0.6< textScore < 0.9 :
+    if textScore > 0.6:
+         return "E"
+    elif 0.4 < textScore < 0.6:
         if KeywordsScore > 0.6:
             return 'E*'
-        elif 0.4<KeywordsScore <0.6:
+        elif 0.4 < KeywordsScore < 0.6:
             return 'ST'
-    elif 0.3< textScore < 0.6:
-        if 0.3<KeywordsScore<0.8:
+    elif 0.3 < textScore < 0.6:
+        if 0.3 < KeywordsScore < 0.8:
             return 'ST'
-    elif textScore < 0.3 :
+    elif textScore < 0.3:
         return 'N'
-
 
 
 def countRightAnswers():
@@ -79,7 +79,7 @@ def countRightAnswers():
 def removeStopWordsProfCsv():
     header2 = ['TexteA', 'TextB', 'TextAPT', 'TextBPT', 'TFIDF', 'Jaccard_Distance', 'Levenshtein_Distance',
                'NGram-Similarity', 'EXPECTED',
-               'RESULT','Score Keywords']
+               'RESULT', 'Score Keywords']
     corpus = []
     corpuskeywords = []
     with open('outputCSV/claims_benc.csv') as inputData:
@@ -90,7 +90,7 @@ def removeStopWordsProfCsv():
             writer.writerow(header2)
             counter = 0
             for claim in claims:
-                #print(counter)
+                # print(counter)
                 counter += 1
                 # data reset
                 data.clear()
@@ -106,7 +106,7 @@ def removeStopWordsProfCsv():
                 # keyword 
                 keywordsA = removeStopWords(' '.join(tokenizer.tokenize(claim[10].lower())))
                 keywordsB = removeStopWords(' '.join(tokenizer.tokenize(claim[11].lower())))
-                print('{} : {}'.format(counter,claim[10]))
+                print('{} : {}'.format(counter, claim[10]))
                 # calculating TF-IDF TEXTE
                 corpus.append(textA_After)
                 corpus.append(textB_After)
@@ -145,12 +145,12 @@ def removeStopWordsProfCsv():
                 writer.writerow(data)
 
 
-#removeStopWordsProfCsv()
-#countRightAnswers()
+removeStopWordsProfCsv()
+countRightAnswers()
 
 
 def test():
-    header2 = ['TexteA', 'TextB', 'keywordA', 'keywordB', 'TFIDF','Score Keywords']
+    header2 = ['TexteA', 'TextB', 'keywordA', 'keywordB', 'TFIDF', 'Score Keywords']
     corpus = []
     corpuskeywords = []
     with open('outputCSV/mixture.csv') as inputData:
@@ -161,15 +161,15 @@ def test():
             writer = csv.writer(outputData)
             writer.writerow(header2)
             counter = 0
-            
+
             for claim in claims:
-              #  print(counter)
+                #  print(counter)
                 counter += 1
-                counter2=0
+                counter2 = 0
                 for claim2 in claims:
                     print(counter2)
-                    counter2+=1
-                   
+                    counter2 += 1
+
                     # data reset
                     data.clear()
                     corpus.clear()
@@ -184,7 +184,7 @@ def test():
                     # keyword 
                     keywordsA = removeStopWords(' '.join(tokenizer.tokenize(claim[1].lower())))
                     keywordsB = removeStopWords(' '.join(tokenizer.tokenize(claim2[1].lower())))
-                   # print('{} : {}'.format(counter,claim[10]))
+                    # print('{} : {}'.format(counter,claim[10]))
                     # calculating TF-IDF TEXTE
                     corpus.append(textA_After)
                     corpus.append(textB_After)
@@ -198,7 +198,7 @@ def test():
                     tfidf_matrix = tfidf_vectorizer.fit_transform(corpuskeywords)
                     cosine = cosine_similarity(tfidf_matrix, tfidf_matrix)
                     tfidf_key_value = cosine[0][1]
-    
+
                     # Actual  model similarity
                     actual_result = getResult(tfidf_value, tfidf_key_value)
                     # adding data
@@ -211,7 +211,7 @@ def test():
                     writer.writerow(data)
 
 
-test()
+##test()
 ##------------------lemmatisation----------------------
 
 def lemmatizer():

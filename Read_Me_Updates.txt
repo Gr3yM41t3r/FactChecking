@@ -33,6 +33,32 @@ le score jac certe diminue mais pas assez pour justifier la difference
 claims2 = U.S. Senate candidate Barry Hinckley says nation's tax code 80,000 pages
 
 
-25/03/22
-à faire
-traitement apres ex Obama says :"......."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14/04/2022
+

@@ -96,4 +96,5 @@ def wa3():
                         writer.writerow(data)
                        
             
-wa3()
+
+

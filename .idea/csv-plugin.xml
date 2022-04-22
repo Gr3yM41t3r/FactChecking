@@ -66,6 +66,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/outputCSV/mixture_result.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/outputCSV/pretraiteCSV.csv">
           <value>
             <Attribute>
