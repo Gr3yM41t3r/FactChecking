@@ -191,6 +191,7 @@ def test():
                     tfidf_matrix = tfidf_vectorizer.fit_transform(corpus)
                     cosine = cosine_similarity(tfidf_matrix, tfidf_matrix)
                     tfidf_value = cosine[0][1]
+                    
 
                     # calculating TF-IDF kEYWORDS                
                     corpuskeywords.append(keywordsA)
