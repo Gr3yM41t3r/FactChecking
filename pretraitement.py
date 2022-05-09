@@ -75,7 +75,7 @@ def remove_stopwords(text):
 
 
 def normalize(words):
-    
+    pre_process(words)
     words = remove_non_ascii(words)
     words = to_lowercase(words)
     words = replace_numbers(words)
