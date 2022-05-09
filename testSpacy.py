@@ -116,10 +116,10 @@ with open(csvfile) as inputData, open('test.csv', 'w+') as fout:
                 break
 
             #recuperation de la claim
-            claim1 = codedelap.find("div", class_="m-statement__quote").get_text()
-            claim2 = codedelap2.find("div", class_="m-statement__quote").get_text()
-            row[6] = claim1
-            row[7] = claim2
+            claim1 = codedelap.find("h2", class_="c-title c-title--subline").get_text()
+            claim2 = codedelap2.find("h2", class_="c-title c-title--subline").get_text()
+            row[6] = claim1[1:-1]
+            row[7] = claim2[1:-1]
 
             #recupération des mots clés
             listmc=""
