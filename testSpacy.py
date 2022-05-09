@@ -69,15 +69,15 @@ for cl in claims:
 ########################### AJOUT AUTEUR+DATE #################################
 
 csvfile = 'inputCSV/claims_prof_2.csv'
-with open(csvfile) as inputData, open('new.csv', 'w') as fout:
+csvoutput= 'outputCSV/test.csv'
+with open(csvfile) as inputData, open('test.csv', 'w+') as fout:
+    header = ["Annotations","Score","CR Author A","CR Author B","Review URL A","Review URL B",
+    "Text Fragments A","Text Fragments B"",Entities A","Entities B", "Keywords A", "Keywords B",
+    "Author Text A", "Author Text B", "Date Text A", "Date Text B", "Url A keywords", "Url B keywords"]
     writer = csv.writer(fout)
     reader = csv.reader(inputData)
-    writer.writerow([Annotations,Score,CR Author A,CR Author B,Review URL A,Review URL B,Text Fragments A,Text Fragments B,Entities A,Entities B", "Keywords A", "Keywords B","Author Text A", "Author Text B", "Date Text A", "Date Text B", "Url A keywords", "Url B keywords"])
     claims = list(reader)
-
-    """for ligne in claims:
-        print(nettoyage(ligne[6]), "----", nettoyage(ligne[7]))"""
-    # variable url
+    writer.writerow(header)
     for row in claims:
         print(row[4][11])
         if row[4][11]!="p":
