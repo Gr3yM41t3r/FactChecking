@@ -9,6 +9,7 @@ from urllib.request import urlopen, Request
 import datefinder
 import nltk
 
+nlp = spacy.load("en_core_web_sm")
 
 """
 # foction de netyoyage de obama says --> reste a voir s'il exite des phrases de type "..." a dit Obama
@@ -67,52 +68,52 @@ for cl in claims:
 
 ########################### AJOUT AUTEUR+DATE #################################
 
-csvfile = 'inputCSV/claims_prof_3.csv'
+csvfile = 'inputCSV/source_claims.csv'
 csvoutput= 'outputCSV/test.csv'
-with open(csvfile) as inputData, open(csvoutput, 'w+') as fout:
+with open(csvfile) as inputData, open('test.csv', 'w+') as fout:
     header = ["Annotations","Score","CR Author A","CR Author B","Review URL A","Review URL B",
-    "Text Fragments A","Text Fragments B"",Entities A","Entities B", "Keywords A", "Keywords B",
+    "Text Fragments A","Text Fragments B","Entities A","Entities B", "Keywords A", "Keywords B",
     "Author Text A", "Author Text B", "Date Text A", "Date Text B", "Url A keywords", "Url B keywords"]
     writer = csv.writer(fout)
     reader = csv.reader(inputData)
     claims = list(reader)
     writer.writerow(header)
     for row in claims:
-        print(row[4][11])
-        if row[4][11]!="p":
-            pass
-        else:
+        if row[2][0]=="p":
             col = []
             url = row[4]
             url2 = row[5]
-            print(url, url2)
-            
+
             # suppression des 4 dernieres colonnes
             row = row[:-4]
 
             # ouverture de la page
             page = urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
             page2 = urlopen(Request(url2, headers={'User-Agent': 'Mozilla'}))
+
             # on charge le code la page
-            codedelap = bs(page,features="html.parser")
-            codedelap2 = bs(page2,features="html.parser")
+            codedelap = bs(page, features="html.parser")
+            codedelap2 = bs(page2, features="html.parser")
 
             # recuperation de l'auteur
-            nom_auteur= codedelap.find("a", class_="m-statement__name").get_text()
-            nom_auteur2= codedelap.find("a", class_="m-statement__name").get_text()
+            nom_auteur = codedelap.find("a", class_="m-statement__name").get_text()
+            nom_auteur2 = codedelap.find("a", class_="m-statement__name").get_text()
             col.append(nom_auteur[1:-2])
             col.append(nom_auteur2[1:-2])
 
             # recuperation date
-            date_ = codedelap.find("div",class_="m-statement__desc").get_text()
-            date_2 = codedelap2.find("div",class_="m-statement__desc").get_text()
+            date_ = codedelap.find("div", class_="m-statement__desc").get_text()
+            date_2 = codedelap2.find("div", class_="m-statement__desc").get_text()
+
             #transformation de la variable de tpe datetime
             match = datefinder.find_dates(date_)
             for m in match:
-                col.append(strftime("%Y-%m-%d"))
+                col.append(m.strftime("%Y-%m-%d"))
+                break
             match2 = datefinder.find_dates(date_2)
             for m in match2:
                 col.append(m.strftime("%Y-%m-%d"))
+                break
 
             #recuperation de la claim
             claim1 = codedelap.find("div", class_="m-statement__quote").get_text()
@@ -121,21 +122,23 @@ with open(csvfile) as inputData, open(csvoutput, 'w+') as fout:
             row[7] = claim2
 
             #recupération des mots clés
-            listmc=[]
-            listmc2=[]
+            listmc=""
+            listmc2=""
             mc = codedelap.find_all("a", class_="c-tag")
             mc2 = codedelap2.find_all("a", class_="c-tag")
             for lien in mc:
                 txt = lien.find("span")
-                listmc.append(txt.get_text())
+                if listmc == "":
+                    listmc += txt.get_text()
+                else:
+                    listmc += ","+txt.get_text()
             for lien in mc2:
                 txt = lien.find("span")
-                listmc2.append(txt.get_text())
-            
-            print(listmc, listmc2)
+                if listmc2 == "":
+                    listmc2 += txt.get_text()
+                else:
+                    listmc2 += "," + txt.get_text()
             col.append(listmc)
             col.append(listmc2)
-
-            print(col)
-
-            writer.writerow(row + [col])
+            writer.writerow(row + col)
+print("done.")
