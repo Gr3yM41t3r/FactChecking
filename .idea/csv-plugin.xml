@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="$PROJECT_DIR$/../../ML/Claims/claimskg_result.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/inputCSV/claims_benc.csv">
           <value>
             <Attribute>
@@ -17,6 +24,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/inputCSV/claims_prof_2.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/inputCSV/false.csv">
           <value>
             <Attribute>
@@ -24,7 +38,28 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/new.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/outputCSV/claims_benc.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/outputCSV/claims_prof_pt.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/outputCSV/mixture.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
