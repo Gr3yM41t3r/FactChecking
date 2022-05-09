@@ -73,6 +73,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/inputCSV/claims_prof_2.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/inputCSV/claimskg_result (1).csv">
           <value>
             <Attribute>
@@ -101,6 +108,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/inputCSV/source_claims.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/inputCSV/true.csv">
           <value>
             <Attribute>
@@ -109,6 +123,13 @@
           </value>
         </entry>
         <entry key="/myfile.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/new.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -129,6 +150,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/outputCSV/mixture.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/outputCSV/mixture_result.csv">
           <value>
             <Attribute>
@@ -137,6 +165,13 @@
           </value>
         </entry>
         <entry key="/outputCSV/pretraiteCSV.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/test.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
