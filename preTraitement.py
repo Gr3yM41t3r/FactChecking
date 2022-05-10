@@ -5,6 +5,7 @@ from nltk.util import ngrams  # This is the ngram magic
 from fmeasures import fMeasure
 from pretraitement import *
 from similarityDetector import *
+from sklearn.metrics import confusion_matrix, plot_confusion_matrix
 
 # lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words('english'))
@@ -205,4 +206,9 @@ def confusiondata():
     print(prediction)
     print(len(model))
     print(len(prediction))
+
+    conf = confusion_matrix(model,prediction)
+    print('\n matrice de confusion \n', conf)
+    plot_confusion_matrix(conf, ["E", "ST", "N", "E*"])
+
 confusiondata()

@@ -73,14 +73,49 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/inputCSV/source_claims.csv">
+        <entry key="/inputCSV/claims_prof_2.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/inputCSV/test.csv">
+        <entry key="/inputCSV/claimskg_result (1).csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/inputCSV/false.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/inputCSV/mixture.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/inputCSV/other.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/inputCSV/souce_claims.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/inputCSV/true.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -94,14 +129,35 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="/outputCSV/pretraiteCSV.csv">
+        <entry key="/new.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="/outputCSV/test.csv">
+        <entry key="/outputCSV/claims_benc.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/outputCSV/claims_prof_pt.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/outputCSV/mixture_result.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/outputCSV/pretraiteCSV.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
