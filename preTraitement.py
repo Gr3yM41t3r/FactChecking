@@ -202,13 +202,48 @@ def confusiondata():
         for i in claims:
             model.append(i[8])
             prediction.append(i[9])
-    print(model)
-    print(prediction)
+    model=model[1:]
+    prediction=prediction[1:]
     print(len(model))
     print(len(prediction))
 
-    conf = confusion_matrix(model,prediction)
-    print('\n matrice de confusion \n', conf)
-    plot_confusion_matrix(conf, ["E", "ST", "N", "E*"])
-
+    matrx = np.zeros(4)
+    for i in range(len(model)):
+        if model[i]=="E":
+            if prediction[i]=="E":
+                matrx[0,0]+=1
+            if prediction[i]=="E*":
+                matrx[0,1]+=1
+            if prediction[i]=="ST":
+                matrx[0,2]+=1
+            if prediction[i]=="N":
+                matrx[0,3]+=1
+        elif model[i]=="E*":
+            if prediction[i]=="E":
+                matrx[1,0]+=1
+            if prediction[i]=="E*":
+                matrx[1,1]+=1
+            if prediction[i]=="ST":
+                matrx[1,2]+=1
+            if prediction[i]=="N":
+                matrx[1,3]+=1
+        if model[i]=="ST":
+            if prediction[i]=="E":
+                matrx[2,0]+=1
+            if prediction[i]=="E*":
+                matrx[2,1]+=1
+            if prediction[i]=="ST":
+                matrx[2,2]+=1
+            if prediction[i]=="N":
+                matrx[2,3]
+        if model[i]=="N":
+            if prediction[i]=="E":
+                matrx[3,0]+=1
+            if prediction[i]=="E*":
+                matrx[3,1]+=1
+            if prediction[i]=="ST":
+                matrx[3,2]+=1
+            if prediction[i]=="N":
+                matrx[3,3]+=1
+    print(matrx)
 confusiondata()
