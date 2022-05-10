@@ -1,12 +1,9 @@
-import re
-
 import numpy as np
-from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 from nltk.util import ngrams  # This is the ngram magic
-from sklearn.feature_extraction.text import TfidfVectorizer
-from pretraitement import * 
+
 from fmeasures import fMeasure
+from pretraitement import *
 from similarityDetector import *
 
 # lemmatizer = WordNetLemmatizer()
@@ -48,33 +45,38 @@ def nGram_similarity(s1, s2, n):
     return len(intersection(nGRAM(s1, n), nGRAM(s2, n))) / (min(len(s1.split()), len(s2.split())) - n + 1)
 
 
-def getResult(id, textScore, keywordsScore):
-    if textScore > 0.6:
-      #  print("{}--->E".format(id))
+def getResult(id, textScore, keywordsScore, athorA, authorB):
+    if textScore > 0.6 and normalize(authorB) == normalize(athorA):
         return "E"
+    elif textScore > 0.6 and keywordsScore > 0.5 and authorB != athorA:
+        return "E*"
     elif 0.35 < textScore <= 0.6:
-        if 0.3 < keywordsScore < 0.8:
-          #  print("{}--->ST".format(id))
-            return 'ST'
+        if keywordsScore < 0.2:
+            return 'N'
+        return 'ST'
     elif textScore <= 0.35:
-       # print("{}--->N".format(id))
+        if keywordsScore > 0.6:
+            return 'ST'
         return 'N'
     else:
         print("waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA3", id)
 
 
-def makeResulat(textscor, threshold):
-    if textscor < threshold:
+def makeResulat(textscor, threshold, athorA, authorB):
+    if textscor > threshold and authorB == athorA:
         return 'E'
+    elif textscor > threshold and authorB != athorA:
+        return 'E*'
 
 
 def removeStopWordsProfCsv():
     header2 = ['TexteA', 'TextB', 'TextAPT', 'TextBPT', 'TFIDF', 'Jaccard_Distance', 'Levenshtein_Distance',
                'NGram-Similarity', 'EXPECTED',
-               'RESULT', 'Score Keywords']
+               'RESULT', 'Score Keywords', 'Score entities']
     corpus = []
     corpuskeywords = []
-    with open('outputCSV/claims_benc.csv') as inputData:
+    corpusentities = []
+    with open('inputCSV/test.csv') as inputData:
         reader = csv.reader(inputData)
         claims = list(reader)
         with open("outputCSV/pretraiteCSV.csv", "w") as outputData:
@@ -88,18 +90,23 @@ def removeStopWordsProfCsv():
                 data.clear()
                 corpus.clear()
                 corpuskeywords.clear()
+                corpusentities.clear()
                 # original text A and B before Modifications
                 textA = claim[6]
                 textB = claim[7]
                 # text A and B after removing stop words lowering and removine punctuation
                 textA_After = normalize(textA)
                 textB_After = normalize(textB)
-                print(textA_After)
-                print(normalize(textA))
-
+                # print(claim[8], claim[9])
                 # keyword 
-                keywordsA = removeStopWords(' '.join(tokenizer.tokenize(claim[10].lower())))
-                keywordsB = removeStopWords(' '.join(tokenizer.tokenize(claim[11].lower())))
+                keywordsA = normalize(claim[14].lower())
+                keywordsB = normalize(claim[15].lower())
+                # entities
+                entiteA = normalize(claim[8].replace('_', ' '))
+
+                entiteB = normalize(claim[9].replace('_', ' '))
+                print("entiteA", entiteA)
+                print("entiteB", entiteB)
                 # print('{} : {}'.format(counter, claim[10]))
                 # calculating TF-IDF TEXTE
                 corpus.append(textA_After)
@@ -114,8 +121,16 @@ def removeStopWordsProfCsv():
                 tfidf_matrix = tfidf_vectorizer.fit_transform(corpuskeywords)
                 cosine = cosine_similarity(tfidf_matrix, tfidf_matrix)
                 tfidf_key_value = cosine[0][1]
+
+                # calculating TF-IDF entities
+                corpusentities.append(entiteA)
+                corpusentities.append(entiteB)
+                tfidf_matrix = tfidf_vectorizer.fit_transform(corpusentities)
+                cosine = cosine_similarity(tfidf_matrix, tfidf_matrix)
+                tfidf_entities_value = cosine[0][1]
+                print("kjlkjlkjljk", tfidf_entities_value)
                 # calculation Jaccard_Distance
-                jaccard_distance = Jaccard_distance(textA_After, textB_After)
+                jaccard_distance = Jaccard_Similarity(textA_After, textB_After)
                 # calculation Levenshtein_Distance
                 lev_distance = Levenshtein_Distance(textA_After, textB_After)
                 # calculation Ngram_similarity
@@ -124,8 +139,8 @@ def removeStopWordsProfCsv():
                 expected_Similarity = claim[0]
                 # Actual  model similarity
                 # print("id: {}  TFIDF: {} TFIDF2: {}".format(counter,tfidf_value,tfidf_key_value))
-                actual_result = getResult(counter, tfidf_value, tfidf_key_value)
-               # actual_result = makeResulat(tfidf_key_value, threshold)
+                actual_result = getResult(counter, tfidf_value, tfidf_key_value, claim[10], claim[11])
+                # actual_result = makeResulat(tfidf_key_value, threshold)
                 # adding data
                 data.append(textA)
                 data.append(textB)
@@ -138,13 +153,31 @@ def removeStopWordsProfCsv():
                 data.append(expected_Similarity)
                 data.append(actual_result)
                 data.append(tfidf_key_value)
+                data.append(tfidf_entities_value)
+
                 writer.writerow(data)
 
 
 removeStopWordsProfCsv()
+
+
+def score():
+    print("________________________________________________________")
+    classes = ["E", "ST", "N", "E*"]
+    total = 0
+    for i in classes:
+        score = fMeasure(i)
+        print("{}: {}".format(i, score))
+        total += score
+    print("total: ", total / len(classes))
+
+
+score()
+
+
 def start():
-    header = ['threshold', 'fmeasure']
-    date =[]
+    header = ['threshold', 'fmeasure', ]
+    date = []
     with open('classeDetector/EFIDF_KEYWORDS.csv', 'w+') as output:
         writer = csv.writer(output)
         writer.writerow(header)
@@ -152,17 +185,8 @@ def start():
             print(i)
             date.clear()
             removeStopWordsProfCsv(i)
-            score = fMeasure("E")
-            date.append(i)
-            date.append(score)
-            writer.writerow(date)
-
-#start()
-
-classes = ["E", "ST", "N","E*"]
-total = 0
-for i in classes:
-    score = fMeasure(i)
-    print("{}: {}".format(i, score))
-    total += score
-print("total: ", total / len(classes))
+            score()
+            # score = fMeasure("E")
+            # date.append(i)
+            # date.append(score)
+            # writer.writerow(date)

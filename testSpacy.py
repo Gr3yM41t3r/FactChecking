@@ -3,11 +3,9 @@ import urllib
 from time import strftime
 
 import spacy
-import pandas as pd
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen, Request
 import datefinder
-import nltk
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -97,7 +95,7 @@ with open(csvfile) as inputData, open('test.csv', 'w+') as fout:
 
             # recuperation de l'auteur
             nom_auteur = codedelap.find("a", class_="m-statement__name").get_text()
-            nom_auteur2 = codedelap.find("a", class_="m-statement__name").get_text()
+            nom_auteur2 = codedelap2.find("a", class_="m-statement__name").get_text()
             col.append(nom_auteur[1:-2])
             col.append(nom_auteur2[1:-2])
 
@@ -116,14 +114,14 @@ with open(csvfile) as inputData, open('test.csv', 'w+') as fout:
                 break
 
             #recuperation de la claim
-            claim1 = codedelap.find("div", class_="m-statement__quote").get_text()
-            claim2 = codedelap2.find("div", class_="m-statement__quote").get_text()
-            row[6] = claim1
-            row[7] = claim2
+            claim1 = codedelap.find("h2", class_="c-title c-title--subline").get_text()
+            claim2 = codedelap2.find("h2", class_="c-title c-title--subline").get_text()
+            row[6] = claim1[1:-1]
+            row[7] = claim2[1:-1]
 
             #recupération des mots clés
-            listmc=""
-            listmc2=""
+            listmc = ""
+            listmc2 = ""
             mc = codedelap.find_all("a", class_="c-tag")
             mc2 = codedelap2.find_all("a", class_="c-tag")
             for lien in mc:

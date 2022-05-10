@@ -85,14 +85,14 @@ def normalize(words):
 
 
 
-a="Marco Rubio says Iran deal means we have to help defend Iran from Israel or other allies "
+a="Marco Rubio says Iran deal means we have to help defend Iran from Israel or other allies 2005 "
 b="Trump says Iran deal forces U.S. to defend Iran if it's attacked by Israel"
 ta =pre_process(a)
 tb =pre_process(b)
 
 pa = normalize(ta)
 pb = normalize(tb)
-
+print(pa)
 
 corpus=[]
 tfidf_vectorizer = TfidfVectorizer()
