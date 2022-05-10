@@ -97,7 +97,7 @@ with open(csvfile) as inputData, open('test.csv', 'w+') as fout:
 
             # recuperation de l'auteur
             nom_auteur = codedelap.find("a", class_="m-statement__name").get_text()
-            nom_auteur2 = codedelap.find("a", class_="m-statement__name").get_text()
+            nom_auteur2 = codedelap2.find("a", class_="m-statement__name").get_text()
             col.append(nom_auteur[1:-2])
             col.append(nom_auteur2[1:-2])
 
@@ -122,8 +122,8 @@ with open(csvfile) as inputData, open('test.csv', 'w+') as fout:
             row[7] = claim2[1:-1]
 
             #recupération des mots clés
-            listmc=""
-            listmc2=""
+            listmc = ""
+            listmc2 = ""
             mc = codedelap.find_all("a", class_="c-tag")
             mc2 = codedelap2.find_all("a", class_="c-tag")
             for lien in mc:
