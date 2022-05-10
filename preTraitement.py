@@ -158,7 +158,7 @@ def removeStopWordsProfCsv():
                 writer.writerow(data)
 
 
-removeStopWordsProfCsv()
+#removeStopWordsProfCsv()
 
 
 def score():
@@ -172,7 +172,7 @@ def score():
     print("total: ", total / len(classes))
 
 
-score()
+#score()
 
 
 def start():
@@ -190,3 +190,19 @@ def start():
             # date.append(i)
             # date.append(score)
             # writer.writerow(date)
+
+def confusiondata():
+    model = []
+    prediction = []
+
+    with open('outputCSV/pretraiteCSV.csv') as input:
+        reader = csv.reader(input)
+        claims = list(reader)
+        for i in claims:
+            model.append(i[8])
+            prediction.append(i[9])
+    print(model)
+    print(prediction)
+    print(len(model))
+    print(len(prediction))
+confusiondata()
