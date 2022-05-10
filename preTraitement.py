@@ -246,4 +246,5 @@ def confusiondata():
             if prediction[i]=="N":
                 matrx[3,3]+=1
     print(matrx)
+
 confusiondata()
