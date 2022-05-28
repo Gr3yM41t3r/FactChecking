@@ -207,7 +207,7 @@ def confusiondata():
     print(len(model))
     print(len(prediction))
 
-    matrx = np.zeros(4)
+    matrx = np.zeros(4,4)
     for i in range(len(model)):
         if model[i]=="E":
             if prediction[i]=="E":
